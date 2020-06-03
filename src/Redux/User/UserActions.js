@@ -1,23 +1,25 @@
 import { SET_USER, CLEAR_USER, UPDATE_USER } from "./UserTypes";
+import Decoded from "jwt-decode"
 
-export const setUser = (token, username, id) => {
-  return {
+export const setUser = (response) => {
+  const arg = {
     type: SET_USER,
-    token,
-    username,
-    id,
-  };
+    ...response,
+  }
+  console.log(arg)
+  return arg;
 };
 
 export const clearUser = () => {
+  console.log('in action clear user')
   return {
     type: CLEAR_USER,
   };
 };
 
-export const updateUser = (username) => {
+export const updateUser = (user) => {
   return {
     type: UPDATE_USER,
-    username,
+    ...user
   };
 };

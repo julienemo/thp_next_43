@@ -6,6 +6,7 @@ import AlertFlash from "./Components/AlertFlash"
 import HomePage from "./Pages/HomePage"
 import SignUpPage from "./Pages/SignUpPage"
 import SignInPage from "./Pages/SignInPage"
+import ProfilePage from "./Pages/ProfilePage"
 import ErrorPage from "./Pages/ErrorPage"
 
 import PrivateRoute from "./Routes/PrivateRoute";
@@ -19,6 +20,7 @@ function App() {
       <Switch>
         <PublicRoute exact path="/sign_in" component={SignInPage} />
         <PublicRoute exact path="/sign_up" component={SignUpPage} />
+        <PrivateRoute exact path="/profile" component={ProfilePage} />
         <Route exact path="/">
           <HomePage/>
         </Route>

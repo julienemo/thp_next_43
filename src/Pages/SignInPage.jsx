@@ -1,18 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory, Link} from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Form, Input, Button, Checkbox } from 'antd';
 
+import { setAlertFlash, setUser } from "../Redux";
+import { StoreToken } from "../Tools"
+
 const SignInPage = () => {
   console.log("In SignIn page");
-  const [error, setError] = useState(null);
   const history = useHistory();
-  //const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const mandatoryMessage = "This field is mandatory.";
 
   const onFinish = values => {
-    console.log('Success:', values);
+    fetch("http://localhost:3000/sign_in", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user: values })
+    })
+      .then(response => response.json().then(json => ({ 
+        token: response.headers.get('Authorization').split(" ")[1],
+        ...json,
+      })))
+        .then(response => { 
+          dispatch(setUser(response));
+          history.push("/profile")
+      })
+      .catch((error) => { 
+        console.log(error)
+        dispatch(setAlertFlash("Log in error. Please verify your email and password", "error"))
+      })
   };
 
   const onFinishFailed = errorInfo => {
@@ -22,7 +42,6 @@ const SignInPage = () => {
   return (
     <div className="page">
       <p>Sign In</p>
-      {error && <p className="error_message">{error}</p>}
       <Form
         name="basic"
         initialValues={{ remember: true }}

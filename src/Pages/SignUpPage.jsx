@@ -2,27 +2,50 @@ import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Form, Input, Button } from "antd";
+import { setAlertFlash, clearAlertFlash } from "../Redux";
 
 
 const SignUpPage = () => {
   console.log("In SignUp page");
 
-  const [error, setError] = useState(null);
   const history = useHistory();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const mandatoryMessage = "This field is mandatory.";
 
   const onFinish = values => {
     if (values.username.match(/\s/g)) {
-      setError("Username can not contain white space")
+      dispatch(setAlertFlash("Username can not contain white space", "error"))
       return
     }
     if (values.password !== values['password-confirm']) { 
-      setError("Password doesn't match confirmation")
+      dispatch(setAlertFlash("Password doesn't match confirmation", "error"))
       return
     }
     console.log('Success:', values);
+    fetch("http://localhost:3000/sign_up", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user: values })
+    })
+      .then(response => response.json())
+      .then(response => {
+        if (response.error) {
+          const errorKey = Object.keys(response.details)[0];
+          const errorContent = response.details[errorKey];
+          const readableError = `${errorKey} ${errorContent}`;
+          dispatch(setAlertFlash(readableError, "error"))
+        } else { 
+          dispatch(setAlertFlash("You just created an account! Now log in with it", "success"))
+          history.push("/sign_in")
+        }
+      })
+      .catch((error) => {
+        dispatch(setAlertFlash("An error occurred", "error"))
+        console.log(error)
+      })
   };
 
   const onFinishFailed = errorInfo => {
@@ -32,7 +55,6 @@ const SignUpPage = () => {
   return (
     <div className="page">
       <p>This this the SignUp page</p>
-      {error && <p className="error_message">{error}</p>}
       <Form
         name="basic"
         initialValues={{

@@ -1,19 +1,17 @@
 import Cookies from "js-cookie";
 import { CookieName } from "../Constants"
 
-export const StoreUser = (response, history) => {
+export const StoreToken = (token) => {
   Cookies.set(
     CookieName,
-    JSON.stringify({
-      id: response.user.id,
-      username: response.user.username,
-      token: response.jwt,
-    })
+    JSON.stringify(token)
   );
 };
 
 export const ClearUser = () => {
   Cookies.remove(CookieName);
+  console.log('cookie is supposed to be removed, following current cookie')
+  console.log(Cookies.get(CookieName))
 };
 
 export const ChangeUser = (username) => {
