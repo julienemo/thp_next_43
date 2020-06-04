@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { Form, Input, Button, Checkbox } from 'antd';
 
 import { setAlertFlash, setUser } from "../Redux";
-import { StoreToken } from "../Tools"
+import { StoreUser } from "../Tools"
 
 const SignInPage = () => {
   console.log("In SignIn page");
@@ -25,9 +25,11 @@ const SignInPage = () => {
         token: response.headers.get('Authorization').split(" ")[1],
         ...json,
       })))
-        .then(response => { 
-          dispatch(setUser(response));
-          history.push("/profile")
+      .then(response => { 
+        StoreUser(response);
+        dispatch(setUser(response));
+        dispatch(setAlertFlash(`Hey ${response.first_name}, how are you doing?`))
+        history.push("/profile")
       })
       .catch((error) => { 
         console.log(error)

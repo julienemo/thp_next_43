@@ -11,22 +11,43 @@ const Navbar = () => {
   console.log('In NavBar');
 
   const hasUser = useSelector((state) => state.user.hasUser);
+  const token = useSelector((state) => state.user.token);
+  console.log(token)
   const firstName = useSelector((state) => state.user.first_name);
   console.log('now has user ' + hasUser)
   console.log('now first name ' + firstName)
-  const token = useSelector((state) => state.user.token);
 
   const dispatch = useDispatch();
   const history = useHistory();
 
   const signOut = () => {
-    ClearUser();
-    dispatch(clearUser)
-    dispatch(setAlertFlash("You are logged out, feel free to come back anytime", "success"))
-    history.push("/sign_in")
-    console.log(hasUser)
-    console.log(token)
-  };
+    fetch("http://localhost:3000/sign_out", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+    })
+      .then(response => { 
+        if (response.statusText === "No Content") {
+          ClearUser();
+          dispatch(clearUser())
+          dispatch(setAlertFlash("You are logged out, feel free to come back anytime", "success"))
+          history.push("/sign_in")
+        } else { 
+          return response.json;
+        }
+      })
+      .then(response => { 
+        if (response && response.error) { 
+          dispatch(setAlertFlash("An error occurred, please contact the service provider", "error"))
+        }
+      })
+      .catch(error => { 
+        console.log(error)
+        dispatch(setAlertFlash("An error occurred, please contact the service provider", "error"))
+      })
+ };
   return (
     <nav>
       <p>This is the navbar</p>

@@ -1,34 +1,26 @@
 import { SET_USER, CLEAR_USER, UPDATE_USER } from "./UserTypes";
 import Cookies from "js-cookie";
-import Decoded from "jwt-decode"
 
 import { CookieName } from "../../Constants"
 
-const cookieToken = Cookies.get(CookieName)
-
-const decoded = () => { 
-  if (cookieToken!== undefined) { 
-    return Decoded(JSON.parse(Cookies.get(CookieName)))
-  }
-  return {
-    id: null,
-    username: null,
-    first_name: null,
-    last_name: null,
-    token: null,
-  }
+const cookie = Cookies.get(CookieName) !== undefined ? JSON.parse(Cookies.get(CookieName)): {
+  token: null,
+  id: null,
+  username: null,
+  first_name: null,
+  last_name: null,
 }
 
 const initial = {
-  token: cookieToken,
-  id: decoded().id,
-  username: decoded().username,
-  first_name: decoded().first_name,
-  last_name: decoded().last_name,
+  token: cookie.token,
+  id: cookie.id,
+  username: cookie.username,
+  first_name: cookie.first_name,
+  last_name: cookie.last_name,
 };
 
-initial.hasUser = initial.token!== undefined ? true : false;
-
+initial.hasUser = initial.token ? true : false;
+console.log('initial has user'+initial.hasUser)
 const UserReducer = (state = initial, action) => {
   switch (action.type) {
     case SET_USER:

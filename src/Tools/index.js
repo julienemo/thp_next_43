@@ -1,11 +1,13 @@
 import Cookies from "js-cookie";
 import { CookieName } from "../Constants"
 
-export const StoreToken = (token) => {
+export const StoreUser = (response) => {
   Cookies.set(
     CookieName,
-    JSON.stringify(token)
+    JSON.stringify(response)
   );
+  console.log("cookie supposed to be set")
+  console.log(Cookies.get(CookieName))
 };
 
 export const ClearUser = () => {
