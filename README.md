@@ -26,27 +26,35 @@ This project is base on [this starter](https://github.com/julienemo/react_starte
 
 #### Specs
 
+**Account related**
+
 - [x] user should be able to create account
 - [x] user should be able to log in with existing account
 - [x] un-logged user should be redirected to login page (if user tries to access a private route)
 - [x] user should be able to log out and token revoked
+
+**Image related**
+
 - [x] user should see all photos he can see (from home)
 - [x] user should be able to view own photos (from profile)
 - [x] photo list should ordered by date, latest first
-- [x] user should be able to see username of photo uploader
 - [x] a private photo should only be visible by the uploader
 - [ ] user should be able to upload a photo (the real photo is not ready but API call ok)
 - [x] user should be able to change description and is_private of own photo
 - [x] user should be able to delete own photo (only from detail view, not from list view)
 - [x] user should be able to click on a photo to see detail and relevant comments
-- [x] own profile or other people's profile should contain a list of photo of the user
+- [x] user should be able to see username of photo uploader
 - [x] on click of username, should be directed to user profile (both from image and from comment)
 
-L'usager doit pouvoir supprimer son compte
+**Comment related**
 
-L'usager doit pouvoir commenter une image
-L'usager doit pouvoir supprimer un de ses commentaires
+- [x] user should be able to delete own comment (from image detail view)
+- [x] user should be able to comment any visible image
 
-other people's profile :username, first_name, last name initial
-own profile: Username, first_name, last_name, email, created_at
-own profile: modify Username, first_name, last_name, email
+**Profile related**
+
+- [x] own profile or other people's profile should contain a list of photo of the user
+- [ ] own profile should show Username, first_name, last_name, email, created_at
+- [ ] own profile should allow modify Username, first_name, last_name, email
+- [ ] own profile should allow delete account delete account
+- [ ] other people's profile should show: username, first_name, last name initial

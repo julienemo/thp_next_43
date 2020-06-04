@@ -6,6 +6,8 @@ import { setAlertFlash, deleteImage } from "../Redux";
 import UsernameLink from "../Components/UsernameLink";
 import shortid from "shortid";
 import ChangeImage from "../Components/ChangeImage";
+import SingleComment from "../Components/SingleComment"
+import NewComment from "../Components/NewComment"
 
 const ImagePage = (props) => { 
   console.log('in image page')
@@ -15,6 +17,7 @@ const ImagePage = (props) => {
   const [image, setImage] = useState(props.location.targetImage)
   const [description, setDescription] = useState(image?image.description:null);
   const [isPrivate, setIsPrivate] = useState(image?image.is_private:null)
+  const [comments, setComments] = useState(image ? image.comments : null)
 
   const [isEditing, setIsEditing] = useState(false);
   const dispatch = useDispatch();
@@ -63,6 +66,21 @@ const ImagePage = (props) => {
     setIsEditing(true);
   }
 
+  const addNewComment = (response) => {
+    console.log('add new comment triggered');
+    const newList = [...comments];
+    newList.unshift(response);
+    setComments(newList);
+   }
+
+
+  const deleteCommentById = (response) => {
+    console.log('detele commment triggered')
+    console.log(comments.filter((el) => el.id !== response.id))
+    setComments(comments.filter((el)=> el.id!== response.id))
+  }
+
+
   useEffect(() => {
     if (!image) {
       fetch(`http://localhost:3000/images/${imageID}`, {
@@ -86,6 +104,7 @@ const ImagePage = (props) => {
             setImage(response)
             setDescription(response.description)
             setIsPrivate(response.is_private)
+            setComments(response.comments)
           }
         })
         .catch((error) => {
@@ -98,7 +117,7 @@ const ImagePage = (props) => {
   const display = () => { 
     return (
       <div>
-        <p>@{image.uploaded_by.username}</p>
+        <p><UsernameLink targetUser={image.uploaded_by}/></p>
         <p>Here is the photo{isPrivate ===true && <>, only you can see it</>}</p>
         <p>{description && description}</p>
         {userOwnsImage && <div>
@@ -112,9 +131,12 @@ const ImagePage = (props) => {
           description: image.description,
           is_private: image.is_private,
           updateFunction: updateImageDetail,
-        }}/>}  
+
+        }} />}
+        <NewComment props={{id: image.id, addCommentFunction:addNewComment}}/>
         <div>    
-          {image.comments.length > 0 && image.comments.map((el) => (<p key={shortid.generate()}><UsernameLink targetUser={el.author}/> said on {el.created_at} "{el.content}"</p>))}
+          {comments && comments
+            .map((el) => (<SingleComment key={shortid.generate()} comment={{ ...el, deleteCommentFunction: deleteCommentById, }}/>))}
         </div>
       </div>
     )
