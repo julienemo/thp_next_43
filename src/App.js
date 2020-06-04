@@ -22,6 +22,7 @@ function App() {
         <PublicRoute exact path="/sign_in" component={SignInPage} />
         <PublicRoute exact path="/sign_up" component={SignUpPage} />
         <PrivateRoute exact path="/profile" component={ProfilePage} />
+        <PrivateRoute exact path="/profile/:userId" component={ProfilePage} />
         <PrivateRoute exact path="/images/:imageID" component={ImagePage} />
         <Route exact path="/">
           <HomePage/>

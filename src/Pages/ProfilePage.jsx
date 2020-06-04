@@ -1,21 +1,38 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ShortId from "shortid";
+import { useParams } from "react-router-dom";
+import { useHistory} from "react-router-dom";
+
 
 import SingleImage from "../Components/SingleImage"
 import { setAlertFlash, setImageList } from "../Redux";
 import { descDateOrderArray } from "../Tools";
 
 const ProfilePage = () => {
-  console.log("In profile page");
+  const { userId } = useParams();
+  const inProfile = userId === undefined
+  const currentUserId = useSelector((state) => state.user.id);
+  const isMe = currentUserId.toString() === userId;
+  const history = useHistory();
 
+  if (isMe) {
+    history.push("/profile");
+  }
+
+  const [load, setLoad] = useState(null)
+  console.log("In profile page" + userId);
   const imageList = useSelector((state) => state.images.list);
   console.log(imageList)
   const token = useSelector((state) => state.user.token);
   const dispatch = useDispatch();
 
+
+
+  const imageQueryUrl = (userId === undefined || isMe) ? "http://localhost:3000/profile/images" : `http://localhost:3000/users/${userId}/images`
+
   useEffect(() => {
-    fetch("http://localhost:3000/profile/images", {
+    fetch(imageQueryUrl, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -24,8 +41,14 @@ const ProfilePage = () => {
     })
       .then(response => response.json())
       .then(response => {
+        console.log(response)
         if (response.error) {
-          dispatch(setAlertFlash("An error occurred", "error"))
+          if (response.error === "Not Found") { 
+            history.push("/error")
+            setLoad(false)
+          } else {
+            dispatch(setAlertFlash("An error occurred", "error"))
+          }
         } else {
           dispatch(setImageList((response)));
         }
@@ -35,16 +58,20 @@ const ProfilePage = () => {
         dispatch(setAlertFlash("An error occurred", "error"))
       })
 
-  }, [dispatch, token]);
+  }, [dispatch, history, imageQueryUrl, token]);
 
 
 
   return (
     <div className="page">
-      <p>This this my profile page</p>
-      <p>These are my photos</p>
-      {imageList && imageList.length === 0 && <p>...<br/>Well obviously I have no photo 0_o</p>}
-      {imageList && descDateOrderArray(imageList).map((el) => <SingleImage key={ShortId.generate()} image={el} />)}
+      {load !== false && (
+        <>
+          {inProfile && <p>This this my profile page</p>}
+          {!inProfile && <p>User {userId}</p>}
+          {imageList && imageList.length === 0 && <p>No photo yet 0_o</p>}
+          {imageList && descDateOrderArray(imageList).map((el) => <SingleImage key={ShortId.generate()} image={el} />)}
+        </>
+      )}
     </div>
   )
  }

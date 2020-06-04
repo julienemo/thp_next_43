@@ -17,6 +17,7 @@ This project is base on [this starter](https://github.com/julienemo/react_starte
 #### Discoveries
 
 1. to get the headers from an API call, you'll need to intercept in the very first `then`, before `response.json()`. To get the authorization header, will need to do `response.headers.get('Authorization')`. `response.headers` alone will always be an empty object. To pile it with the response body, see [this SO solution](https://stackoverflow.com/questions/41812056/extract-both-json-and-headers-from-fetch/53826511#53826511).
+2. It is possible to pass object props from Link to Route like [this](https://www.youtube.com/watch?v=nmbX2QL7ZJc), but it won't persist. Not sure how interesting it is, but there is one less API call.
 
 #### Specs
 
@@ -34,12 +35,14 @@ This project is base on [this starter](https://github.com/julienemo/react_starte
 - [ ] user should be able to delete own photo
 - [ ] user should be able to decide and modify whether a photo is private
 - [x] user should be able to click on a photo to see detail and relevant comments
+- [x] own profile or other people's profile should contain a list of photo of the user
+- [x] on click of username, should be directed to user profile (both from image and from comment)
 
 L'usager doit pouvoir supprimer son compte
-L'usager doit pouvoir consulter son profil usager (Username, first_name, last_name, email, created_at)
-L'usager doit pouvoir éditer son profil (email, prénom, nom)
 
 L'usager doit pouvoir commenter une image
 L'usager doit pouvoir supprimer un de ses commentaires
 
-En cliquant sur l'username, l'usager peut consulter la page de profile du username sur lequel il a cliqué et donc voir :username, first_name, last name inital, Sa liste d'image
+other people's profile :username, first_name, last name initial
+own profile: Username, first_name, last_name, email, created_at
+own profile: modify Username, first_name, last_name, email
