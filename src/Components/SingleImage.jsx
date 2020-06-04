@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -7,6 +7,7 @@ import UsernameLink from "./UsernameLink";
 const SingleImage = (image) => {
   console.log('in single image')
   const imageObject = image.image;
+
   const userId = useSelector((state) => state.user.id);
   console.log(imageObject)
   const userOwnsImage = imageObject.uploaded_by_id === userId;

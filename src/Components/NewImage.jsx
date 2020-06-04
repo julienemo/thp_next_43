@@ -4,7 +4,7 @@ import { Form, Input, Button, Upload, message, Checkbox } from "antd";
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { setAlertFlash, addImage } from "../Redux";
 
-const NewImage = () => {
+const ChangeImage = () => {
   const userId = useSelector((state) => state.user.id);
   const token = useSelector((state) => state.user.token);
   const dispatch = useDispatch();
@@ -100,7 +100,7 @@ const NewImage = () => {
 
       <p>Upload a photo</p>
       <Form
-        name="newImage"
+        name="ChangeImage"
         className="post-preview"
         initialValues={{
           remember: true,
@@ -128,4 +128,4 @@ const NewImage = () => {
   );
 };
 
-export default NewImage;
+export default ChangeImage;
