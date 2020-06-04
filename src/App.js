@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom"
 
 import Navbar from "./Components/Navbar"
+import AlertFlash from "./Components/AlertFlash"
 import HomePage from "./Pages/HomePage"
 import SignUpPage from "./Pages/SignUpPage"
 import SignInPage from "./Pages/SignInPage"
@@ -14,6 +15,7 @@ function App() {
   return (
     <Router>
       <Navbar />
+      <AlertFlash />
       <Switch>
         <PublicRoute exact path="/sign_in" component={SignInPage} />
         <PublicRoute exact path="/sign_up" component={SignUpPage} />

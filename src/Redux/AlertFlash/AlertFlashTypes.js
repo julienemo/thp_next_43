@@ -1,0 +1,2 @@
+export const SET_ALERT_FLASH = "SET_ALERT_FLASH";
+export const CLEAR_ALERT_FLASH = "CLEAR_ALERT_FLASH";
