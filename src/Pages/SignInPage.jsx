@@ -7,7 +7,6 @@ import { setAlertFlash, setUser } from "../Redux";
 import { StoreUser } from "../Tools"
 
 const SignInPage = () => {
-  console.log("In SignIn page");
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -32,13 +31,9 @@ const SignInPage = () => {
         history.push("/profile")
       })
       .catch((error) => { 
-        console.log(error)
+        console.error(error)
         dispatch(setAlertFlash("Log in error. Please verify your email and password", "error"))
       })
-  };
-
-  const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo);
   };
 
   return (
@@ -48,7 +43,6 @@ const SignInPage = () => {
         name="basic"
         initialValues={{ remember: true }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
       >
         <Form.Item
           label="Email"

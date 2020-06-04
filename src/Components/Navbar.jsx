@@ -56,6 +56,11 @@ const Navbar = () => {
         <li>
           <Link to="/">Home</Link>
         </li>
+        {hasUser && (
+          <li>
+            <Link to="/profile">Me</Link>
+          </li>
+        )}
         {!hasUser && (
           <li>
             <Link to="/sign_up">Sign Up</Link>

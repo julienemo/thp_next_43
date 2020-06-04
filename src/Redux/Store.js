@@ -3,10 +3,12 @@ import thunkMiddleware from "redux-thunk";
 
 import UserReducer from "./User/UserReducer";
 import AlertFlashReducer from "./AlertFlash/AlertFlashReducer";
+import ImageListReducer from "./ImageList/ImageListReducer";
 
 const rootReducer = combineReducers({
   user: UserReducer,
   alert: AlertFlashReducer,
+  images: ImageListReducer,
 });
 
 const Store = createStore(

@@ -21,3 +21,10 @@ export const ChangeUser = (username) => {
   const newCookie = { ...original, username };
   Cookies.set(CookieName, JSON.stringify(newCookie));
 };
+
+export const descDateOrderArray = (array) => { 
+  const compare = (a, b) => {
+    return a.created_at < b.created_at ? 1:-1
+  }
+  return array.sort(compare)
+}

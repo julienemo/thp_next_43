@@ -6,8 +6,6 @@ import { setAlertFlash, clearAlertFlash } from "../Redux";
 
 
 const SignUpPage = () => {
-  console.log("In SignUp page");
-
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -22,7 +20,6 @@ const SignUpPage = () => {
       dispatch(setAlertFlash("Password doesn't match confirmation", "error"))
       return
     }
-    console.log('Success:', values);
     fetch("http://localhost:3000/sign_up", {
       method: "POST",
       headers: {
@@ -44,12 +41,8 @@ const SignUpPage = () => {
       })
       .catch((error) => {
         dispatch(setAlertFlash("An error occurred", "error"))
-        console.log(error)
+        console.errors(error)
       })
-  };
-
-  const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo);
   };
 
   return (
