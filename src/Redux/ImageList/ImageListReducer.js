@@ -16,7 +16,7 @@ const ImageListReducer = (state = initial, action) => {
       let newState = {
         list: [...state.list],
       };
-      newState.list.unshift(action.newPost);
+      newState.list.unshift(action);
       return newState;
     case DELETE_IMAGE:
       console.log('in reducer delete image')

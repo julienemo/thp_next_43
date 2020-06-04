@@ -5,6 +5,7 @@ import ShortId from "shortid";
 import SingleImage from "../Components/SingleImage"
 import { setAlertFlash, setImageList } from "../Redux";
 import { descDateOrderArray } from "../Tools";
+import NewImage from "../Components/NewImage";
 
 const HomePage = () => {
   console.log("In Home page");
@@ -39,7 +40,8 @@ const HomePage = () => {
   return (
     <div className="page">
       <p>This this the home page</p>
-      {!hasUser&& <p>You're not logged in, you can't see anything, but welcome anyway.</p>}
+      {!hasUser && <p>You're not logged in, you can't see anything, but welcome anyway.</p>}
+      {hasUser && <NewImage/>}
       {imageList && descDateOrderArray(imageList).map((el) => <SingleImage key={ShortId.generate()} image={el} />)}
     </div>
   )
