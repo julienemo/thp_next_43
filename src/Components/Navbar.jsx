@@ -12,7 +12,6 @@ const Navbar = () => {
 
   const hasUser = useSelector((state) => state.user.hasUser);
   const token = useSelector((state) => state.user.token);
-  console.log(token)
   const firstName = useSelector((state) => state.user.first_name);
   console.log('now has user ' + hasUser)
   console.log('now first name ' + firstName)

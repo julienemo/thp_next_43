@@ -28,28 +28,18 @@ This project is base on [this starter](https://github.com/julienemo/react_starte
 - [x] user should be able to view own photos (from profile)
 - [x] photo list should ordered by date, latest first
 - [x] user should be able to see username of photo uploader
+- [x] a private photo should only be visible by the uploader
+- [ ] user should be able to upload a photo (the real photo is not ready but API call ok)
+- [ ] user should be able to change description of own photo
+- [ ] user should be able to delete own photo
+- [ ] user should be able to decide and modify whether a photo is private
+- [x] user should be able to click on a photo to see detail and relevant comments
 
 L'usager doit pouvoir supprimer son compte
-L'usager doit pouvoir consulter son profil usager :
-Username
-Prénom/Nom
-Email
-Date d'inscription
+L'usager doit pouvoir consulter son profil usager (Username, first_name, last_name, email, created_at)
 L'usager doit pouvoir éditer son profil (email, prénom, nom)
-L'usager doit pouvoir uploader une image avec une description
-L'usager doit pouvoir modifier la description d'une de ses images
-L'usager doit pouvoir supprimer une de ses images
 
-En cliquant sur une image, l'usager doit pouvoir consulter une image en particulier avec ses commentaires
 L'usager doit pouvoir commenter une image
 L'usager doit pouvoir supprimer un de ses commentaires
 
-1. Bonus
-   L'usager peut passer une image en privée et cette dernière devient visible uniquement par l'usager.
-
-   En cliquant sur l'username, l'usager peut consulter la page de profile du username sur lequel il a cliqué et donc voir :
-   Son username
-   Son Prénom/Nom
-   Son Email
-   Sa date d'inscription
-   Sa liste d'image
+En cliquant sur l'username, l'usager peut consulter la page de profile du username sur lequel il a cliqué et donc voir :username, first_name, last name inital, Sa liste d'image
