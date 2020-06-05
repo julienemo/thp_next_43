@@ -1,18 +1,16 @@
-import React, { useState} from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Form, Input, Button, Upload, message, Checkbox } from "antd";
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { setAlertFlash, addImage } from "../Redux";
+import { Form, Input, Button } from "antd";
+
+import { setAlertFlash } from "../Redux";
 
 const NewComment = (props) => {
-  console.log('in new comment')
-  console.log(props.props.id)
   const image = props.props.id;
   const userId = useSelector((state) => state.user.id);
   const token = useSelector((state) => state.user.token);
   const dispatch = useDispatch();
+  
   const onFinish = (values) => {
-    console.log(values)
     fetch(`http://localhost:3000/images/${image}/comments`, {
       method: "POST",
       headers: {
@@ -30,9 +28,8 @@ const NewComment = (props) => {
     })
       .then(response => response.json())
       .then(response => { 
-        console.log(response);
         if (response.error) {
-
+          dispatch(setAlertFlash("An error occurred in the response", "error"))
         } else { 
           props.props.addCommentFunction(response)
         }
@@ -53,9 +50,7 @@ const NewComment = (props) => {
         }}
         onFinish={onFinish}
       >
-        <Form.Item
-          name="content"
-        >
+        <Form.Item name="content" >
           <Input placeholder="Comment on this image. Comment!" />
         </Form.Item>
 

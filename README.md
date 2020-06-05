@@ -14,8 +14,8 @@ This project is base on [this starter](https://github.com/julienemo/react_starte
 2. in general, fetch error handling
 3. how to let rails API accept params on result ordering ?
 4. how to prefill antD form with existing value in edit ?
-5. things work on chrome but got huge "TypeError: b is undefined" in firefox....
-6. "Method PATCH is not allowed by Access-Control-Allow-Methods in preflight response.
+
+5. "Method PATCH is not allowed by Access-Control-Allow-Methods in preflight response.
    ChangeImage.jsx:16 PATCH http://localhost:3000/image"
 
 #### Discoveries
@@ -23,6 +23,7 @@ This project is base on [this starter](https://github.com/julienemo/react_starte
 1. to get the headers from an API call, you'll need to intercept in the very first `then`, before `response.json()`. To get the authorization header, will need to do `response.headers.get('Authorization')`. `response.headers` alone will always be an empty object. To pile it with the response body, see [this SO solution](https://stackoverflow.com/questions/41812056/extract-both-json-and-headers-from-fetch/53826511#53826511).
 2. It is possible to pass object props from Link to Route like [this](https://www.youtube.com/watch?v=nmbX2QL7ZJc), but it won't persist. Not sure how interesting it is, but there is one less API call.
 3. Despite my cors settings, `PATCH` requests are still blocked. [this chrome extension](https://chrome.google.com/webstore/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino/related) is doing fine for now.
+4. Browser NEEDS to have redux-devtool extension
 
 #### Specs
 

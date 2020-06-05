@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory, Link} from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Form, Input, Button, Checkbox } from 'antd';
 

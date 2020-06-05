@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useHistory,useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-
-import { setAlertFlash, deleteImage } from "../Redux";
-import UsernameLink from "../Components/UsernameLink";
 import shortid from "shortid";
+
+import { setAlertFlash } from "../Redux";
+import UsernameLink from "../Components/UsernameLink";
 import ChangeImage from "../Components/ChangeImage";
 import SingleComment from "../Components/SingleComment"
 import NewComment from "../Components/NewComment"
 
 const ImagePage = (props) => { 
-  console.log('in image page')
-  const { imageID } = useParams();
   const userId = useSelector((state) => state.user.id);
   const token = useSelector((state) => state.user.token);
+  const { imageID } = useParams();
   const [image, setImage] = useState(props.location.targetImage)
   const [description, setDescription] = useState(image?image.description:null);
   const [isPrivate, setIsPrivate] = useState(image?image.is_private:null)
   const [comments, setComments] = useState(image ? image.comments : null)
-
   const [isEditing, setIsEditing] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -26,7 +24,6 @@ const ImagePage = (props) => {
   const userOwnsImage = image && image.uploaded_by_id === userId;
 
   const deleteCurrentImage = () => { 
-    console.log('delete photo clicked')
     fetch(`http://localhost:3000/images/${imageID}`, {
       method: "DELETE",
       headers: {
@@ -36,10 +33,9 @@ const ImagePage = (props) => {
     })
       .then(response => response.json())
       .then(response => { 
-        console.log(response);
         if (response.error) {
           if (response.error === "Not Found") { 
-            // in case of inexistant image
+            // in case of inexistent image
             dispatch(setAlertFlash("The action couldn't be performed", "success"))
           }
         } else {
@@ -55,19 +51,16 @@ const ImagePage = (props) => {
   }
 
   const updateImageDetail = (response) => {
-    console.log('in update')
     setDescription(response.description)
     setIsPrivate(response.is_private)
     setIsEditing(false)
   }
 
   const showChangeImageFields = () => {
-    console.log("change image clicked");
     setIsEditing(true);
   }
 
   const addNewComment = (response) => {
-    console.log('add new comment triggered');
     const newList = [...comments];
     newList.unshift(response);
     setComments(newList);
@@ -75,11 +68,8 @@ const ImagePage = (props) => {
 
 
   const deleteCommentById = (response) => {
-    console.log('detele commment triggered')
-    console.log(comments.filter((el) => el.id !== response.id))
     setComments(comments.filter((el)=> el.id!== response.id))
   }
-
 
   useEffect(() => {
     if (!image) {
@@ -92,7 +82,6 @@ const ImagePage = (props) => {
       })
         .then(response => response.json())
         .then(response => {
-          console.log(response)
           if (response.error) {
             if (response.error === "Not Found") { 
               history.push('/error')
@@ -141,11 +130,13 @@ const ImagePage = (props) => {
       </div>
     )
   }
-  return (<>
-    {image && display() }
-    {!image && <p>There is something but no, you can't see</p>}
-  </>)
 
+  return (
+    <>
+      {image && display() }
+      {!image && <p>There is something but no, you can't see</p>}
+    </>
+  )
 }
 
 export default ImagePage;

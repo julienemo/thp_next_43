@@ -11,7 +11,6 @@ const ChangeImage = (targetImage) => {
   const dispatch = useDispatch();
 
   const onFinish = (values) => {
-    console.log(values)
     fetch(`http://localhost:3000/images/${imageObject.id}`, {
       method: "PATCH",
       headers: {
@@ -27,9 +26,8 @@ const ChangeImage = (targetImage) => {
     })
       .then(response => response.json())
       .then(response => {
-        console.log(response);
         if (response.error) {
-
+          dispatch(setAlertFlash("An error occurred in the response", "error"))
         } else {
           imageObject.updateFunction(response)
         }

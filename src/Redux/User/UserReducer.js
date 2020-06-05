@@ -1,7 +1,7 @@
-import { SET_USER, CLEAR_USER, UPDATE_USER } from "./UserTypes";
 import Cookies from "js-cookie";
 
 import { CookieName } from "../../Constants"
+import { SET_USER, CLEAR_USER, UPDATE_USER } from "./UserTypes";
 
 const cookie = Cookies.get(CookieName) !== undefined ? JSON.parse(Cookies.get(CookieName)): {
   token: null,
@@ -20,7 +20,7 @@ const initial = {
 };
 
 initial.hasUser = initial.token ? true : false;
-console.log('initial has user'+initial.hasUser)
+
 const UserReducer = (state = initial, action) => {
   switch (action.type) {
     case SET_USER:
@@ -33,7 +33,6 @@ const UserReducer = (state = initial, action) => {
         hasUser: true,
       };
     case CLEAR_USER:
-      console.log('in reducer clear user')
       return {
         token: null,
         id: null,

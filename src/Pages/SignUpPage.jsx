@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Form, Input, Button } from "antd";
-import { setAlertFlash, clearAlertFlash } from "../Redux";
 
+import { setAlertFlash } from "../Redux";
 
 const SignUpPage = () => {
   const history = useHistory();

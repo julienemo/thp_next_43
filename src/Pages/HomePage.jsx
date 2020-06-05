@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ShortId from "shortid";
 
-import SingleImage from "../Components/SingleImage"
 import { setAlertFlash, setImageList } from "../Redux";
 import { descDateOrderArray } from "../Tools";
 import NewImage from "../Components/NewImage";
+import SingleImage from "../Components/SingleImage"
 
 const HomePage = () => {
-  console.log("In Home page");
   const imageList = useSelector((state) => state.images.list);
   const hasUser = useSelector((state) => state.user.hasUser);
   const token = useSelector((state) => state.user.token);
@@ -31,7 +31,7 @@ const HomePage = () => {
         }
       })
       .catch(error => { 
-        console.log(error);
+        console.error(error);
         dispatch(setAlertFlash("An error occurred", "error"))
       })
     
@@ -40,7 +40,7 @@ const HomePage = () => {
   return (
     <div className="page">
       <p>This this the home page</p>
-      {!hasUser && <p>You're not logged in, you can't see anything, but welcome anyway.</p>}
+      {!hasUser && <p>You're not logged in, you can't see anything, but welcome anyway.You can try <Link to="/sign_in">sign in</Link> though.</p>}
       {hasUser && <NewImage/>}
       {imageList && descDateOrderArray(imageList).map((el) => <SingleImage key={ShortId.generate()} image={el} />)}
     </div>

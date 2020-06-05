@@ -1,20 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory  } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 
-import { ClearUser } from "../Tools";
 import { setAlertFlash, clearUser } from "../Redux";
-
+import { ClearUser } from "../Tools";
 
 const Navbar = () => { 
-  console.log('In NavBar');
-
   const hasUser = useSelector((state) => state.user.hasUser);
   const token = useSelector((state) => state.user.token);
   const firstName = useSelector((state) => state.user.first_name);
-  console.log('now has user ' + hasUser)
-  console.log('now first name ' + firstName)
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -43,13 +37,13 @@ const Navbar = () => {
         }
       })
       .catch(error => { 
-        console.log(error)
+        console.error(error)
         dispatch(setAlertFlash("An error occurred, please contact the service provider", "error"))
       })
  };
   return (
     <nav>
-      <p>This is the navbar</p>
+      <p>THPGram</p>
       {firstName && <p>hey {firstName}</p>}
       <ul>
         <li>
@@ -78,7 +72,6 @@ const Navbar = () => {
       </ul>
     </nav>
   );
-
 }
 
 export default Navbar;

@@ -6,14 +6,10 @@ export const StoreUser = (response) => {
     CookieName,
     JSON.stringify(response)
   );
-  console.log("cookie supposed to be set")
-  console.log(Cookies.get(CookieName))
 };
 
 export const ClearUser = () => {
   Cookies.remove(CookieName);
-  console.log('cookie is supposed to be removed, following current cookie')
-  console.log(Cookies.get(CookieName))
 };
 
 export const ChangeUser = (username) => {

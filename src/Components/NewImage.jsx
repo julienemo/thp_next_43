@@ -11,7 +11,6 @@ const NewImage = () => {
   const [loading, setLoading] = useState(false);
   //const [imageUrl, setImageUrl] = useState(null)
   const onFinish = (values) => {
-    console.log(values)
     fetch("http://localhost:3000/images", {
       method: "POST",
       headers: {
@@ -29,9 +28,8 @@ const NewImage = () => {
     })
       .then(response => response.json())
       .then(response => { 
-        console.log(response);
         if (response.error) {
-
+          dispatch(setAlertFlash("An error occurred in the response", "error"))
         } else { 
           dispatch(addImage(response));
         }

@@ -1,8 +1,6 @@
 import React from "react";
 
 const ErrorPage = () => {
-  console.log("In Error page");
-
   return (
     <div className="page">
       <p>The page you're looking for does not exist.</p>

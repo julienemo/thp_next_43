@@ -1,13 +1,11 @@
 import React, { useEffect,useState } from "react";
+import { useParams, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ShortId from "shortid";
-import { useParams } from "react-router-dom";
-import { useHistory} from "react-router-dom";
 
-
-import SingleImage from "../Components/SingleImage"
 import { setAlertFlash, setImageList } from "../Redux";
 import { descDateOrderArray } from "../Tools";
+import SingleImage from "../Components/SingleImage"
 
 const ProfilePage = () => {
   const { userId } = useParams();

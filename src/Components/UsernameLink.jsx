@@ -1,21 +1,15 @@
 import React from "react"
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-const UsernameLink = (targetUser) => {
-  console.log('in username link')
-  const userObject = targetUser.targetUser;
-  console.log(userObject)
-  const userId = useSelector((state) => state.user.id);
-  const isMe = userObject.id.toString() === userId;
+import { useSelector } from "react-redux";
 
-  const display = () => {
-    if (isMe) { 
-      return (<Link to="/profile">@{userObject.username}</Link>)
-    }
-    return (<Link to={`/profile/${userObject.id}`}>@{userObject.username}</Link>);
-  }
+const UsernameLink = (targetUser) => {
+  const userId = useSelector((state) => state.user.id);
+  const userObject = targetUser.targetUser;
+  const isMe = userObject.id === userId;
+
   return (<strong>
-    {display()}
+    {isMe && <Link to="/profile">I myself</Link>}
+    {!isMe && <Link to={`/profile/${userObject.id}`}>@{userObject.username}</Link>}
   </strong>)
 }
 
