@@ -28,7 +28,7 @@ const Navbar = () => {
           dispatch(setAlertFlash("You are logged out, feel free to come back anytime", "success"))
           history.push("/sign_in")
         } else { 
-          return response.json;
+          return response.json();
         }
       })
       .then(response => { 
