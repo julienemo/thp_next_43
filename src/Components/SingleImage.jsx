@@ -8,11 +8,16 @@ const SingleImage = (image) => {
 
   return (
     <div className="single_image">
+      {imageObject.is_private ? <p>private</p>:<></>}
       <div>
-        <p><Link to={{
+        <div>
+          <Link to={{
           pathname: `/images/${imageObject.id}`,
           targetImage: { ...imageObject },
-        }} >Here is the image {imageObject.is_private.toString()}</Link></p>
+        }} >
+            <img src={`data:image/${imageObject.stream}`} alt="uploaded by user" />
+          </Link>
+        </div>
 
         {imageObject.description && <p>{imageObject.description}</p>}
 

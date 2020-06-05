@@ -1,15 +1,15 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Form, Input, Button, Upload, message, Checkbox } from "antd";
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { Form, Input, Checkbox, Upload, Button } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+
 import { setAlertFlash, addImage } from "../Redux";
 
 const NewImage = () => {
-  const userId = useSelector((state) => state.user.id);
+  const [file, setFile] = useState(null);
   const token = useSelector((state) => state.user.token);
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
-  //const [imageUrl, setImageUrl] = useState(null)
+
   const onFinish = (values) => {
     fetch("http://localhost:3000/images", {
       method: "POST",
@@ -21,8 +21,7 @@ const NewImage = () => {
         {
           image: {
             ...values,
-            extension: "png",
-            stream: "123123123",
+            ...file,
           }
         })
     })
@@ -40,63 +39,34 @@ const NewImage = () => {
       })
   };
 
-  const handleChange = (info) => {
-    if (info.file.status === 'uploading') {
-      setLoading(true);
-      return;
-    }
-    if (info.file.status === 'done') {
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj, imageUrl =>
-        this.setState({
-          imageUrl,
-          loading: false,
-        }),
-      );
-    }
+  const uploadProps = {
+    name: 'file',
+    accept: ".png, .jpg, .jpeg, .gif, .svg, .bmp, .orf",
+    beforeUpload: (file) => {
+      const extension = file.name.split(".")[1]
+      const reader = new FileReader();
+      reader.readAsDataURL(file)
+      reader.onload = (e) => {
+        const stream = e.target.result
+        setFile({extension, stream})
+      };
+      reader.onerror = (error) => {
+        dispatch(setAlertFlash("Can not read image", "error"))
+        console.error(error);
+      };
+      return false;
+    },
   };
 
-  const getBase64 = (img, callback) => {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result));
-    reader.readAsDataURL(img);
-  }
-
-  const beforeUpload = (file) => {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-    if (!isJpgOrPng) {
-      message.error('You can only upload JPG/PNG file!');
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-      message.error('Image must smaller than 2MB!');
-    }
-    return isJpgOrPng && isLt2M;
-  }
-
-  const uploadButton = (
-    <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div className="ant-upload-text">Upload</div>
-    </div>
-  );
-
-  const { imageUrl } = loading;
   return (
     <>
-      {false && <Upload
-        name="avatar"
-        listType="picture-card"
-        className="avatar-uploader"
-        showUploadList={false}
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-        beforeUpload={beforeUpload}
-        onChange={handleChange}
-      >
-        {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-      </Upload>}
+      <p>Upload an image</p>
+      <Upload {...uploadProps}>
+        <Button>
+          <UploadOutlined /> choose your image
+        </Button>
+      </Upload>
 
-      <p>Upload a photo</p>
       <Form
         name="NewImage"
         className="post-preview"

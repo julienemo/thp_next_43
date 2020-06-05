@@ -107,7 +107,8 @@ const ImagePage = (props) => {
     return (
       <div>
         <p><UsernameLink targetUser={image.uploaded_by}/></p>
-        <p>Here is the photo{isPrivate ===true && <>, only you can see it</>}</p>
+        <p>{isPrivate ===true && <>Only you can see this image</>}</p>
+        <img src={`data:image/${image.stream}`} alt="uploaded by user" />
         <p>{description && description}</p>
         {userOwnsImage && <div>
           <ul>

@@ -15,15 +15,14 @@ This project is base on [this starter](https://github.com/julienemo/react_starte
 3. how to let rails API accept params on result ordering ?
 4. how to prefill antD form with existing value in edit ?
 
-5. "Method PATCH is not allowed by Access-Control-Allow-Methods in preflight response.
-   ChangeImage.jsx:16 PATCH http://localhost:3000/image"
-
 #### Discoveries
 
 1. to get the headers from an API call, you'll need to intercept in the very first `then`, before `response.json()`. To get the authorization header, will need to do `response.headers.get('Authorization')`. `response.headers` alone will always be an empty object. To pile it with the response body, see [this SO solution](https://stackoverflow.com/questions/41812056/extract-both-json-and-headers-from-fetch/53826511#53826511).
 2. It is possible to pass object props from Link to Route like [this](https://www.youtube.com/watch?v=nmbX2QL7ZJc), but it won't persist. Not sure how interesting it is, but there is one less API call.
-3. Despite my cors settings, `PATCH` requests are still blocked. [this chrome extension](https://chrome.google.com/webstore/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino/related) is doing fine for now.
+3. Despite my cors settings, `PATCH` requests are still blocked. [this chrome extension](https://chrome.google.com/webstore/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino/related) is doing fine for now. (PUT is also available)
 4. Browser NEEDS to have redux-devtool extension
+5. AntD has a file uploading component, [here](https://stackoverflow.com/a/56323485/9079168) is how to personalize it to encode content with base64
+6. [here](https://stackoverflow.com/a/8499716/9079168) is how to display base64 encoded content
 
 #### Specs
 
@@ -40,7 +39,7 @@ This project is base on [this starter](https://github.com/julienemo/react_starte
 - [x] user should be able to view own photos (from profile)
 - [x] photo list should ordered by date, latest first
 - [x] a private photo should only be visible by the uploader
-- [ ] user should be able to upload a photo (the real photo is not ready but API call ok)
+- [x] user should be able to upload a photo (the real photo is not ready but API call ok)
 - [x] user should be able to change description and is_private of own photo
 - [x] user should be able to delete own photo (only from detail view, not from list view)
 - [x] user should be able to click on a photo to see detail and relevant comments

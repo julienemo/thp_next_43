@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Form, Input, Button, Upload, message, Checkbox } from "antd";
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { setAlertFlash, addImage } from "../Redux";
+import { Form, Input, Button, Checkbox } from "antd";
+
+import { setAlertFlash } from "../Redux";
 
 const ChangeImage = (targetImage) => {
-  console.log('in change image')
   const imageObject = targetImage.targetImage
   const token = useSelector((state) => state.user.token);
   const dispatch = useDispatch();
