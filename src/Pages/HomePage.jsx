@@ -15,26 +15,27 @@ const HomePage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => { 
-    fetch("http://localhost:3000/images", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-    })
-      .then(response => response.json())
-      .then(response => { 
-        if (response.error) {
+    if (token) {
+      fetch("http://localhost:3000/images", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+      })
+        .then(response => response.json())
+        .then(response => {
+          if (response.error) {
+            dispatch(setAlertFlash("An error occurred", "error"))
+          } else {
+            dispatch(setImageList((response)));
+          }
+        })
+        .catch(error => {
+          console.error(error);
           dispatch(setAlertFlash("An error occurred", "error"))
-        } else { 
-          dispatch(setImageList((response)));
-        }
-      })
-      .catch(error => { 
-        console.error(error);
-        dispatch(setAlertFlash("An error occurred", "error"))
-      })
-    
+        })
+    }
   }, [dispatch, token]);
 
   return (

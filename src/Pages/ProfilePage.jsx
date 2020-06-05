@@ -19,13 +19,9 @@ const ProfilePage = () => {
   }
 
   const [load, setLoad] = useState(null)
-  console.log("In profile page" + userId);
   const imageList = useSelector((state) => state.images.list);
-  console.log(imageList)
   const token = useSelector((state) => state.user.token);
   const dispatch = useDispatch();
-
-
 
   const imageQueryUrl = (userId === undefined || isMe) ? "http://localhost:3000/profile/images" : `http://localhost:3000/users/${userId}/images`
 
@@ -39,7 +35,6 @@ const ProfilePage = () => {
     })
       .then(response => response.json())
       .then(response => {
-        console.log(response)
         if (response.error) {
           if (response.error === "Not Found") { 
             history.push("/error")
@@ -52,7 +47,7 @@ const ProfilePage = () => {
         }
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
         dispatch(setAlertFlash("An error occurred", "error"))
       })
 
